@@ -13,12 +13,12 @@ export const initialNodeState: TNodeState = {
 
 function nodeReducer(state: TNodeState, action: TNodeAction) {
   switch (action.type) {
-    case nodeActionVariant.createNode:
+    case nodeActionVariant.addNode:
       return {
         ...state,
         nodeList: [...state.nodeList, action.payload],
       };
-    case nodeActionVariant.deleteNode:
+    case nodeActionVariant.removeNode:
       return {
         ...state,
         nodeList: [...state.nodeList, action.payload],

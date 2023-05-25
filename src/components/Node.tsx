@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   ButtonGroup,
   Flex,
   HStack,
@@ -19,9 +18,14 @@ import {
 } from 'react-icons/md';
 
 import { TNodeProps } from '../types';
+import { addNode, useNodeStore } from '../store';
 
 function Node({ item, level, children }: TNodeProps) {
   const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const { state, dispatch } = useNodeStore();
+
+  // console.log({ state, dispatch });
 
   const entityIcon = item.hasChildren ? (
     isCollapsed ? (
@@ -34,8 +38,17 @@ function Node({ item, level, children }: TNodeProps) {
   );
 
   const handleAddNode = () => {
-    console.log('add', item.id);
+    dispatch(
+      addNode({
+        id: new Date().getTime() + Math.random(),
+        title: 'hello',
+        parentId: item.id,
+        hasChildren: false,
+      })
+    );
   };
+
+  console.log('add', item);
 
   return (
     <Flex
@@ -44,12 +57,8 @@ function Node({ item, level, children }: TNodeProps) {
       marginLeft='24px'
       cursor='pointer'
     >
-      <Flex
-        flexDirection='row'
-        alignItems='center'
-        onClick={() => setIsCollapsed(!isCollapsed)}
-      >
-        <HStack spacing='2px'>
+      <Flex flexDirection='row' alignItems='center'>
+        <HStack spacing='2px' onClick={() => setIsCollapsed(!isCollapsed)}>
           {!item.hasChildren ? null : (
             <Icon
               as={MdChevronRight}

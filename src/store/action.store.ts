@@ -1,16 +1,16 @@
 import { TNodeItem } from '../types';
 import { nodeActionVariant } from './config.store';
 
-export const createTodo = (payload: TNodeItem) => {
+export const addNode = (payload: TNodeItem) => {
   return {
-    type: nodeActionVariant.createNode,
+    type: nodeActionVariant.addNode,
     payload,
   } as const;
 };
 
-export const deleteTodo = (payload: number) => {
+export const removeNode = (payload: number) => {
   return {
-    type: nodeActionVariant.deleteNode,
+    type: nodeActionVariant.removeNode,
     payload,
   } as const;
 };
