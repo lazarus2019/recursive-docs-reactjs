@@ -1,7 +1,5 @@
 export const nodeActionVariant = {
   addNode: 'addNode',
-  getNode: 'getNode',
-  getNodeList: 'getNodeList',
-  updateNode: 'updateNode',
+  toggleHasChildren: 'toggleHasChildren',
   removeNode: 'removeNode',
 } as const;

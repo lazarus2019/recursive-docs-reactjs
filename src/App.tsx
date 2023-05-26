@@ -1,8 +1,10 @@
 import Tree from './components/Tree';
-import { getTreeData } from './utils/getTreeData';
+import { useNodeStore } from './store';
 
 function App() {
-  return <Tree treeData={getTreeData()} />;
+  const { state } = useNodeStore();
+
+  return <Tree treeData={state.nodeList} />;
 }
 
 export default App;

@@ -1,17 +1,18 @@
-import { useEffect, useReducer } from 'react';
+import { useMemo, useReducer } from 'react';
 
 import NodeContext from './context.store';
 import nodeReducer, { initialNodeState } from './reducer.store';
 import { TNodeProviderProps } from './type.store';
 
 function NodeProvider({ children }: TNodeProviderProps) {
-  const [state, dispatch] = useReducer(nodeReducer, initialNodeState);
+  const [state, dispatch] = useReducer(nodeReducer, initialNodeState());
 
-  return (
-    <NodeContext.Provider value={{ state, dispatch }}>
-      {children}
-    </NodeContext.Provider>
-  );
+  const value = useMemo(() => {
+    console.log(state);
+    return { state, dispatch };
+  }, [state]);
+
+  return <NodeContext.Provider value={value}>{children}</NodeContext.Provider>;
 }
 
 export default NodeProvider;

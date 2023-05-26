@@ -18,14 +18,12 @@ import {
 } from 'react-icons/md';
 
 import { TNodeProps } from '../types';
-import { addNode, useNodeStore } from '../store';
+import { addNode, toggleHasChildren, useNodeStore } from '../store';
 
 function Node({ item, level, children }: TNodeProps) {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
-  const { state, dispatch } = useNodeStore();
-
-  // console.log({ state, dispatch });
+  const { dispatch } = useNodeStore();
 
   const entityIcon = item.hasChildren ? (
     isCollapsed ? (
@@ -38,17 +36,16 @@ function Node({ item, level, children }: TNodeProps) {
   );
 
   const handleAddNode = () => {
+    console.log(item.id);
     dispatch(
       addNode({
         id: new Date().getTime() + Math.random(),
-        title: 'hello',
+        title: 'dev-test',
         parentId: item.id,
         hasChildren: false,
       })
     );
   };
-
-  console.log('add', item);
 
   return (
     <Flex
@@ -88,7 +85,6 @@ function Node({ item, level, children }: TNodeProps) {
             icon={<MdOutlineRemoveCircle />}
             background='none'
             color='red.500'
-            onClick={handleAddNode}
           />
         </ButtonGroup>
       </Flex>
