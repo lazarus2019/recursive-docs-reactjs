@@ -1,5 +1,7 @@
+import { Flex } from '@chakra-ui/react';
+
 import { TTreeProps } from '../types';
-import Row from './Node';
+import Node from './Node';
 
 function Tree({ treeData, parentId = 0, level = 0 }: TTreeProps) {
   const items = treeData
@@ -9,13 +11,13 @@ function Tree({ treeData, parentId = 0, level = 0 }: TTreeProps) {
   if (!items.length) return null;
 
   return (
-    <>
+    <Flex flexDirection='column'>
       {items.map((item) => (
-        <Row key={item.id} item={item} level={level}>
+        <Node key={item.id} item={item} level={level}>
           <Tree treeData={treeData} parentId={item.id} level={level + 1} />
-        </Row>
+        </Node>
       ))}
-    </>
+    </Flex>
   );
 }
 

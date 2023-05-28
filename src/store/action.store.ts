@@ -8,13 +8,6 @@ export const addNode = (payload: TNodeItem) => {
   } as const;
 };
 
-export const toggleHasChildren = (payload: TNodeItem) => {
-  return {
-    type: nodeActionVariant.toggleHasChildren,
-    payload,
-  } as const;
-};
-
 export const removeNode = (payload: number) => {
   return {
     type: nodeActionVariant.removeNode,

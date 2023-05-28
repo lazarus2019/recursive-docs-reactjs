@@ -8,7 +8,6 @@ function NodeProvider({ children }: TNodeProviderProps) {
   const [state, dispatch] = useReducer(nodeReducer, initialNodeState());
 
   const value = useMemo(() => {
-    console.log(state);
     return { state, dispatch };
   }, [state]);
 

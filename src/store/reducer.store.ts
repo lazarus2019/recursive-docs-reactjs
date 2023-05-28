@@ -18,21 +18,38 @@ export const initialNodeState = (): TNodeState => {
   };
 };
 
-function nodeReducer(state: TNodeState, action: TNodeAction) {
+function nodeReducer(state: TNodeState, action: TNodeAction): TNodeState {
   switch (action.type) {
     case nodeActionVariant.addNode: {
+      const currentNodeList = [...state.nodeList, action.payload];
+
       const currentNode = {
         ...state,
-        nodeList: [...state.nodeList, action.payload],
+        nodeList: currentNodeList,
       };
 
       state.nodeList.map((node) => {
         if (node.id === action.payload.parentId) {
-          console.log('in', node.hasChildren);
-          console.log('in', node.id);
           node.hasChildren = true;
         }
       });
+
+      localStorage.setItem('tree-data', JSON.stringify(currentNode));
+
+      return currentNode;
+    }
+
+    case nodeActionVariant.removeNode: {
+      const newNodeList = [...state.nodeList];
+
+      const currentNodeList = newNodeList.filter(
+        (node) => node.id != action.payload
+      );
+
+      const currentNode = {
+        ...state,
+        nodeList: currentNodeList,
+      };
 
       localStorage.setItem('tree-data', JSON.stringify(currentNode));
 

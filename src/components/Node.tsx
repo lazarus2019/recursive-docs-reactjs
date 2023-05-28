@@ -17,8 +17,8 @@ import {
   MdOutlineRemoveCircle,
 } from 'react-icons/md';
 
+import { addNode, removeNode, useNodeStore } from '../store';
 import { TNodeProps } from '../types';
-import { addNode, toggleHasChildren, useNodeStore } from '../store';
 
 function Node({ item, level, children }: TNodeProps) {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -36,7 +36,6 @@ function Node({ item, level, children }: TNodeProps) {
   );
 
   const handleAddNode = () => {
-    console.log(item.id);
     dispatch(
       addNode({
         id: new Date().getTime() + Math.random(),
@@ -47,9 +46,13 @@ function Node({ item, level, children }: TNodeProps) {
     );
   };
 
+  const handleRemoveNode = () => {
+    dispatch(removeNode(item.id));
+  };
+
   return (
     <Flex
-      key={`section-${item.id}`}
+      key={item.id}
       flexDirection='column'
       marginLeft='24px'
       cursor='pointer'
@@ -85,6 +88,7 @@ function Node({ item, level, children }: TNodeProps) {
             icon={<MdOutlineRemoveCircle />}
             background='none'
             color='red.500'
+            onClick={handleRemoveNode}
           />
         </ButtonGroup>
       </Flex>
