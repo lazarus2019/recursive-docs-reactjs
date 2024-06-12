@@ -5,6 +5,6 @@ export function getTreeData(): TNodeItem[] {
   return treeData.map((item) => ({
     ...item,
     hasChildren:
-      treeData.filter((item) => item.parentId === item.id).length > 0,
+      treeData.filter((child) => child.parentId === item.id).length > 0,
   }));
 }
