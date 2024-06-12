@@ -7,7 +7,7 @@ import {
   IconButton,
   Text,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { ElementRef, ForwardedRef, forwardRef, useState } from 'react';
 import {
   MdChevronRight,
   MdDescription,
@@ -20,19 +20,22 @@ import {
 import { addNode, removeNode, useNodeStore } from '../store';
 import { TNodeProps } from '../types';
 
-function Node({ item, level, children }: TNodeProps) {
+function Node(
+  { item, level, children, ...props }: TNodeProps,
+  ref: ForwardedRef<ElementRef<'div'>>
+) {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const { dispatch } = useNodeStore();
 
   const entityIcon = item.hasChildren ? (
     isCollapsed ? (
-      <Icon as={MdFolder} boxSize='6' color={'purple.600'} />
+      <Icon as={MdFolder} boxSize="6" color={'purple.600'} />
     ) : (
-      <Icon as={MdFolderOpen} boxSize='6' color={'purple.600'} />
+      <Icon as={MdFolderOpen} boxSize="6" color={'purple.600'} />
     )
   ) : (
-    <Icon as={MdDescription} ml='24px' boxSize='6' color={'blue.500'} />
+    <Icon as={MdDescription} ml="24px" boxSize="6" color={'blue.500'} />
   );
 
   const handleAddNode = () => {
@@ -52,17 +55,19 @@ function Node({ item, level, children }: TNodeProps) {
 
   return (
     <Flex
+      ref={ref}
       key={item.id}
-      flexDirection='column'
-      marginLeft='24px'
-      cursor='pointer'
+      flexDirection="column"
+      marginLeft="24px"
+      cursor="pointer"
+      {...props}
     >
-      <Flex flexDirection='row' alignItems='center'>
-        <HStack spacing='2px' onClick={() => setIsCollapsed(!isCollapsed)}>
+      <Flex flexDirection="row" alignItems="center">
+        <HStack spacing="2px" onClick={() => setIsCollapsed(!isCollapsed)}>
           {!item.hasChildren ? null : (
             <Icon
               as={MdChevronRight}
-              boxSize='6'
+              boxSize="6"
               sx={{
                 transition: 'transform 0.2s linear',
                 transform: !isCollapsed && 'rotate(90deg)',
@@ -70,24 +75,24 @@ function Node({ item, level, children }: TNodeProps) {
             />
           )}
           {entityIcon}
-          <Text fontSize='md' marginLeft='8px'>
-            {item.title}
+          <Text fontSize="md" marginLeft="8px">
+            {item.title} - {item.id}
           </Text>
         </HStack>
 
         <ButtonGroup>
           <IconButton
-            aria-label='add one node'
+            aria-label="add one node"
             icon={<MdOutlineAddCircle />}
-            background='none'
-            color='green.500'
+            background="none"
+            color="green.500"
             onClick={handleAddNode}
           />
           <IconButton
-            aria-label='remove one node'
+            aria-label="remove one node"
             icon={<MdOutlineRemoveCircle />}
-            background='none'
-            color='red.500'
+            background="none"
+            color="red.500"
             onClick={handleRemoveNode}
           />
         </ButtonGroup>
@@ -105,4 +110,6 @@ function Node({ item, level, children }: TNodeProps) {
   );
 }
 
-export default Node;
+const ForwardedRefNode = forwardRef(Node);
+
+export default ForwardedRefNode;

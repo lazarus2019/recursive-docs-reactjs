@@ -1,3 +1,4 @@
+import { DroppableProvided } from '@hello-pangea/dnd';
 import { ReactNode } from 'react';
 
 export type TNodeItem = {
@@ -11,6 +12,7 @@ export type TTreeProps = {
   treeData: TNodeItem[];
   parentId?: number;
   level?: number;
+  dropProvided: DroppableProvided;
 };
 
 export type TNodeProps = {
